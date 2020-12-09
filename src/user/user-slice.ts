@@ -16,6 +16,7 @@ interface UserState {
   permissions: (Permissions | null)[]
   user?: User
   loginError?: LoginError
+  sidebarCollapsed: boolean
 }
 
 const initialState: UserState = {
@@ -57,6 +58,7 @@ const initialState: UserState = {
     Permissions.ViewImagings,
     Permissions.RequestImaging,
   ],
+  sidebarCollapsed: false,
 }
 
 const userSlice = createSlice({
@@ -80,10 +82,19 @@ const userSlice = createSlice({
       state.user = undefined
       state.permissions = []
     },
+    setSidebar(state, { payload }: PayloadAction<boolean>) {
+      state.sidebarCollapsed = payload
+    },
   },
 })
 
-export const { fetchPermissions, loginError, loginSuccess, logoutSuccess } = userSlice.actions
+export const {
+  fetchPermissions,
+  loginError,
+  loginSuccess,
+  logoutSuccess,
+  setSidebar,
+} = userSlice.actions
 
 export const getCurrentSession = (username: string): AppThunk => async (dispatch) => {
   const user = await remoteDb.getUser(username)
@@ -130,6 +141,30 @@ export const login = (username: string, password: string): AppThunk => async (di
       )
     }
   }
+}
+
+export const toggleSidebar = (): AppThunk => async (dispatch) => {
+  const session = await remoteDb.getSession()
+  const user = await remoteDb.getUser(session.userCtx.name)
+  const newCollapsedState = !(user as any).sidebarCollapsed
+  try {
+    await remoteDb.putUser(user.name, {
+      metadata: {
+        sidebarCollapsed: newCollapsedState,
+      },
+    })
+  } catch (error) {
+    console.log(error)
+  }
+
+  dispatch(setSidebar(newCollapsedState))
+}
+
+export const fetchSidebar = (): AppThunk => async (dispatch) => {
+  const session = await remoteDb.getSession()
+  const user = await remoteDb.getUser(session.userCtx.name)
+  const newCollapsedState = (user as any).sidebarCollapsed
+  dispatch(setSidebar(newCollapsedState))
 }
 
 export const logout = (): AppThunk => async (dispatch) => {

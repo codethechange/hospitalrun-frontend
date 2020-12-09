@@ -22,7 +22,7 @@ import { RootState } from './shared/store'
 
 const HospitalRun = () => {
   const { title } = useTitle()
-  const { sidebarCollapsed } = useSelector((state: RootState) => state.components)
+  const { sidebarCollapsed } = useSelector((state: RootState) => state.user)
 
   return (
     <div>
