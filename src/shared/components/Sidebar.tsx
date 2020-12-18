@@ -48,6 +48,8 @@ const Sidebar = () => {
       ? 'incidents'
       : splittedPath[1].includes('imagings')
       ? 'imagings'
+      : splittedPath[1].includes('inventory')
+      ? 'inventory'
       : 'none',
   )
 
@@ -412,6 +414,56 @@ const Sidebar = () => {
     </>
   )
 
+  const getInventoryLinks = () => (
+    <>
+      <ListItem
+        active={splittedPath[1].includes('inventory')}
+        onClick={() => {
+          navigateTo('/inventory')
+          setExpansion('inventory')
+        }}
+        className="nav-item"
+        style={listItemStyle}
+      >
+        <Icon
+          icon={
+            splittedPath[1].includes('inventory') && expandedItem === 'inventory'
+              ? 'down-arrow'
+              : 'right-arrow'
+          }
+          style={expandibleArrow}
+        />
+        <Icon icon="lab" /> {!sidebarCollapsed && t('inventory.label')}
+      </ListItem>
+      {splittedPath[1].includes('inventory') && expandedItem === 'inventory' && (
+        <List layout="flush" className="nav flex-column">
+          {permissions.includes(Permissions.AddInventory) && (
+            <ListItem
+              className="nav-item"
+              style={listSubItemStyleNew}
+              onClick={() => navigateTo('/inventory/new')}
+              active={splittedPath[1].includes('inventory') && splittedPath.length > 2}
+            >
+              <Icon icon="add" style={iconMargin} />
+              {!sidebarCollapsed && t('inventory.add.new')}
+            </ListItem>
+          )}
+          {permissions.includes(Permissions.ViewInventory) && (
+            <ListItem
+              className="nav-item"
+              style={listSubItemStyle}
+              onClick={() => navigateTo('/inventory')}
+              active={splittedPath[1].includes('inventory') && splittedPath.length < 3}
+            >
+              <Icon icon="incident" style={iconMargin} />
+              {!sidebarCollapsed && t('inventory.add.label')}
+            </ListItem>
+          )}
+        </List>
+      )}
+    </>
+  )
+
   return (
     <nav
       className="d-none d-md-block bg-light sidebar"
@@ -436,6 +488,7 @@ const Sidebar = () => {
           {getLabLinks()}
           {getImagingLinks()}
           {getIncidentLinks()}
+          {getInventoryLinks()}
         </List>
       </div>
     </nav>

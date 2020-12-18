@@ -3,6 +3,7 @@ import bloodType from './blood-type'
 import dashboard from './dashboard'
 import imagings from './imagings'
 import incidents from './incidents'
+import inventory from './inventory'
 import labs from './labs'
 import medications from './medications'
 import networkStatus from './network-status'
@@ -30,4 +31,5 @@ export default {
   ...user,
   ...bloodType,
   ...imagings,
+  ...inventory,
 }
