@@ -89,6 +89,20 @@ const pageMap: {
     path: '/incidents/visualize',
     icon: 'incident',
   },
+  newItem: {
+    // Need to add permissions
+    permission: Permissions.ViewIncidents,
+    label: 'inventory.actions.add',
+    path: '/inventory/new',
+    icon: 'add',
+  },
+  ViewInventory: {
+    // Need to add permissions
+    permission: Permissions.ViewIncidents,
+    label: 'inventory.items.label',
+    path: '/inventory',
+    icon: 'lab',
+  },
   newVisit: {
     permission: Permissions.AddVisit,
     label: 'visits.visit.new',

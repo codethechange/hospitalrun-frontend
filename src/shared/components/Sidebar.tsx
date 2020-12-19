@@ -437,7 +437,8 @@ const Sidebar = () => {
       </ListItem>
       {splittedPath[1].includes('inventory') && expandedItem === 'inventory' && (
         <List layout="flush" className="nav flex-column">
-          {permissions.includes(Permissions.AddInventory) && (
+          {/* Need to figure out how to give permissions */}
+          {permissions.includes(Permissions.ViewImagings) && (
             <ListItem
               className="nav-item"
               style={listSubItemStyleNew}
@@ -445,10 +446,10 @@ const Sidebar = () => {
               active={splittedPath[1].includes('inventory') && splittedPath.length > 2}
             >
               <Icon icon="add" style={iconMargin} />
-              {!sidebarCollapsed && t('inventory.add.new')}
+              {!sidebarCollapsed && t('inventory.actions.add')}
             </ListItem>
           )}
-          {permissions.includes(Permissions.ViewInventory) && (
+          {permissions.includes(Permissions.ViewImagings) && (
             <ListItem
               className="nav-item"
               style={listSubItemStyle}
@@ -456,7 +457,7 @@ const Sidebar = () => {
               active={splittedPath[1].includes('inventory') && splittedPath.length < 3}
             >
               <Icon icon="incident" style={iconMargin} />
-              {!sidebarCollapsed && t('inventory.add.label')}
+              {!sidebarCollapsed && t('inventory.items.label')}
             </ListItem>
           )}
         </List>
