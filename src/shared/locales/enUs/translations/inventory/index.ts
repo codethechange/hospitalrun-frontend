@@ -1,6 +1,6 @@
 export default {
   inventory: {
-    filterTitle: ' Filter by status',
+    filterTitle: ' Filter by type',
     label: 'Inventory',
     actions: {
       add: 'Add Inventory Item',
@@ -9,6 +9,7 @@ export default {
       clothing: 'Clothing',
       equipment: 'Equipment',
       medication: 'Medication',
+      all: 'All Types',
     },
     items: {
       label: 'Inventory Items',
@@ -16,8 +17,10 @@ export default {
       view: 'View Item',
       name: 'Name',
       rank: 'Rank',
+      type: 'Type',
       crossReference: 'Cross Reference',
       reorderPoint: 'Reorder Point',
+      distributionUnitLabel: 'Distribution Unit',
       pricePerUnit: 'Price per Unit',
       note: 'Note',
       error: {

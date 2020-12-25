@@ -7,8 +7,8 @@ import PrivateRoute from '../shared/components/PrivateRoute'
 import Permissions from '../shared/model/Permissions'
 import { RootState } from '../shared/store'
 import AddItem from './add/AddItem'
-import ViewInventory from './ViewInventory'
-import ViewItem from './ViewItem'
+import ViewInventory from './view/ViewInventory'
+import ViewItem from './view/ViewItem'
 
 const Inventory = () => {
   const { permissions } = useSelector((state: RootState) => state.user)
@@ -23,19 +23,19 @@ const Inventory = () => {
   return (
     <Switch>
       <PrivateRoute
-        isAuthenticated={permissions.includes(Permissions.ViewInventory)}
+        isAuthenticated={permissions.includes(Permissions.ViewIncidents)}
         exact
         path="/inventory"
         component={ViewInventory}
       />
       <PrivateRoute
-        isAuthenticated={permissions.includes(Permissions.AddItem)}
+        isAuthenticated={permissions.includes(Permissions.ViewIncidents)}
         exact
         path="/incidents/new"
         component={AddItem}
       />
       <PrivateRoute
-        isAuthenticated={permissions.includes(Permissions.ViewItem)}
+        isAuthenticated={permissions.includes(Permissions.ViewIncidents)}
         exact
         path="/incidents/:id"
         component={ViewItem}

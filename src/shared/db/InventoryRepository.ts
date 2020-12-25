@@ -4,7 +4,7 @@ import InventoryItem from '../model/InventoryItem'
 import Repository from './Repository'
 
 interface SearchOptions {
-  status: InventoryFilter
+  type: InventoryFilter
 }
 class InventoryRepository extends Repository<InventoryItem> {
   constructor() {
@@ -16,10 +16,9 @@ class InventoryRepository extends Repository<InventoryItem> {
   }
 
   private static getSearchCriteria(options: SearchOptions): any {
-    const statusFilter =
-      options.status !== InventoryFilter.all ? [{ 'data.status': options.status }] : []
+    const typeFilter = options.type !== InventoryFilter.all ? [{ 'data.type': options.type }] : []
     const selector = {
-      $and: statusFilter,
+      $and: typeFilter,
     }
     return {
       selector,

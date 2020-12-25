@@ -6,6 +6,7 @@ import { Route, Switch } from 'react-router-dom'
 import Dashboard from './dashboard/Dashboard'
 import Imagings from './imagings/Imagings'
 import Incidents from './incidents/Incidents'
+import Inventory from './inventory/Inventory'
 import Labs from './labs/Labs'
 import Medications from './medications/Medications'
 import Breadcrumbs from './page-header/breadcrumbs/Breadcrumbs'
@@ -55,6 +56,7 @@ const HospitalRun = () => {
                   <Route path="/incidents" component={Incidents} />
                   <Route path="/settings" component={Settings} />
                   <Route path="/imaging" component={Imagings} />
+                  <Route path="/inventory" component={Inventory} />
                 </Switch>
               </div>
               <Toaster autoClose={5000} hideProgressBar draggable />
