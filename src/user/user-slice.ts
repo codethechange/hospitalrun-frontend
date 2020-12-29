@@ -56,6 +56,9 @@ const initialState: UserState = {
     Permissions.ReadVisits,
     Permissions.ViewImagings,
     Permissions.RequestImaging,
+    Permissions.ViewInventory,
+    Permissions.AddItem,
+    Permissions.ViewItem,
   ],
 }
 

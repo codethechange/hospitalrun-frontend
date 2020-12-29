@@ -25,7 +25,7 @@ const Navbar = () => {
     'incidents.reports.new',
     'imagings.requests.new',
     'settings.label',
-    'inventory.actions.add',
+    'inventory.items.new',
   ]
 
   function getDropdownListOfPages(pages: Page[]) {

@@ -3,7 +3,8 @@ export default {
     filterTitle: ' Filter by type',
     label: 'Inventory',
     actions: {
-      add: 'Add Inventory Item',
+      add: 'Add Item',
+      search: 'Search Inventory',
     },
     type: {
       clothing: 'Clothing',
@@ -13,7 +14,7 @@ export default {
     },
     items: {
       label: 'Inventory Items',
-      new: 'Add Item',
+      new: 'Add Inventory Item',
       view: 'View Item',
       name: 'Name',
       rank: 'Rank',

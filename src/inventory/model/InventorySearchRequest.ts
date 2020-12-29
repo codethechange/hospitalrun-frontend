@@ -1,5 +1,6 @@
-import InventoryFilter from '../InventoryFilter'
+import { ItemType } from './ItemType'
 
 export default interface InventorySearchRequest {
-  type: InventoryFilter
+  text: string
+  type: ItemType
 }

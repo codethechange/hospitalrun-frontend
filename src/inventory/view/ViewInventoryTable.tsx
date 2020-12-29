@@ -10,27 +10,6 @@ interface Props {
   searchRequest: InventorySearchRequest
 }
 
-export function populateExportData(dataToPopulate: any, theData: any) {
-  let first = true
-  if (theData != null) {
-    theData.forEach((elm: any) => {
-      const entry = {
-        name: elm.name,
-        type: elm.type,
-        reorderPoint: elm.reorderPoint,
-        distributionUnit: elm.distributionUnit,
-        pricePerUnit: elm.pricePerUnit,
-      }
-      if (first) {
-        dataToPopulate[0] = entry
-        first = false
-      } else {
-        dataToPopulate.push(entry)
-      }
-    })
-  }
-}
-
 function ViewInventoryTable(props: Props) {
   const { searchRequest } = props
   const { t } = useTranslator()
@@ -39,6 +18,14 @@ function ViewInventoryTable(props: Props) {
 
   if (data === undefined || isLoading) {
     return <Spinner type="DotLoader" loading />
+  }
+
+  if (data.length === 0) {
+    return (
+      <>
+        <div>No Items Found</div>
+      </>
+    )
   }
 
   return (

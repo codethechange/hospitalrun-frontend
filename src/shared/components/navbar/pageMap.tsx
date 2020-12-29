@@ -90,15 +90,13 @@ const pageMap: {
     icon: 'incident',
   },
   newItem: {
-    // Need to add permissions
-    permission: Permissions.ViewIncidents,
-    label: 'inventory.actions.add',
+    permission: Permissions.AddItem,
+    label: 'inventory.items.new',
     path: '/inventory/new',
     icon: 'add',
   },
   ViewInventory: {
-    // Need to add permissions
-    permission: Permissions.ViewIncidents,
+    permission: Permissions.ViewInventory,
     label: 'inventory.items.label',
     path: '/inventory',
     icon: 'lab',

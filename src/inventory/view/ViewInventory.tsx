@@ -1,66 +1,67 @@
 import { Button } from '@hospitalrun/components'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useCallback, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
 import { useButtonToolbarSetter } from '../../page-header/button-toolbar/ButtonBarProvider'
 import { useUpdateTitle } from '../../page-header/title/TitleContext'
-import SelectWithLabelFormGroup, {
-  Option,
-} from '../../shared/components/input/SelectWithLabelFormGroup'
 import useTranslator from '../../shared/hooks/useTranslator'
-import InventoryFilter from '../InventoryFilter'
+import Permissions from '../../shared/model/Permissions'
+import { RootState } from '../../shared/store'
+import InventorySearchRequest from '../model/InventorySearchRequest'
+import InventorySearch from './InventorySearch'
 import ViewInventoryTable from './ViewInventoryTable'
 
 const ViewInventory = () => {
   const { t } = useTranslator()
   const history = useHistory()
-  const setButtonToolBar = useButtonToolbarSetter()
+  const setButtons = useButtonToolbarSetter()
   const updateTitle = useUpdateTitle()
   useEffect(() => {
     updateTitle(t('inventory.items.label'))
   })
-  const [searchFilter, setSearchFilter] = useState(InventoryFilter.all)
+  const { permissions } = useSelector((state: RootState) => state.user)
+
+  const getButtons = useCallback(() => {
+    const buttons: React.ReactNode[] = []
+
+    if (permissions.includes(Permissions.AddItem)) {
+      buttons.push(
+        <Button
+          icon="add"
+          onClick={() => history.push('/inventory/new')}
+          outlined
+          color="success"
+          key="inventory.items.new"
+        >
+          {t('inventory.items.new')}
+        </Button>,
+      )
+    }
+
+    return buttons
+  }, [permissions, history, t])
 
   useEffect(() => {
-    setButtonToolBar([
-      <Button
-        key="newItemButton"
-        outlined
-        color="success"
-        icon="add"
-        onClick={() => history.push('/inventory/new')}
-      >
-        {t('inventory.items.new')}
-      </Button>,
-    ])
-
+    setButtons(getButtons())
     return () => {
-      setButtonToolBar([])
+      setButtons([])
     }
-  }, [setButtonToolBar, t, history])
+  }, [getButtons, setButtons])
 
-  const filterOptions: Option[] = Object.values(InventoryFilter).map((filter) => ({
-    label: t(`inventory.type.${filter}`),
-    value: `${filter}`,
-  }))
+  const [searchRequest, setSearchRequest] = useState<InventorySearchRequest>({
+    text: '',
+    type: 'all',
+  })
+
+  const onSearchRequestChange = (newSearchRequest: InventorySearchRequest) => {
+    setSearchRequest(newSearchRequest)
+  }
 
   return (
     <>
-      <div className="row">
-        <div className="col-md-3 col-lg-2">
-          <SelectWithLabelFormGroup
-            name="type"
-            label={t('inventory.filterTitle')}
-            options={filterOptions}
-            defaultSelected={filterOptions.filter(({ value }) => value === searchFilter)}
-            onChange={(values) => setSearchFilter(values[0] as InventoryFilter)}
-            isEditable
-          />
-        </div>
-      </div>
-      <div className="row">
-        <ViewInventoryTable searchRequest={{ type: searchFilter }} />
-      </div>
+      <InventorySearch searchRequest={searchRequest} onChange={onSearchRequestChange} />
+      <ViewInventoryTable searchRequest={searchRequest} />
     </>
   )
 }

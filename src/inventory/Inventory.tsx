@@ -23,19 +23,19 @@ const Inventory = () => {
   return (
     <Switch>
       <PrivateRoute
-        isAuthenticated={permissions.includes(Permissions.ViewIncidents)}
+        isAuthenticated={permissions.includes(Permissions.ViewInventory)}
         exact
         path="/inventory"
         component={ViewInventory}
       />
       <PrivateRoute
-        isAuthenticated={permissions.includes(Permissions.ViewIncidents)}
+        isAuthenticated={permissions.includes(Permissions.AddItem)}
         exact
         path="/incidents/new"
         component={AddItem}
       />
       <PrivateRoute
-        isAuthenticated={permissions.includes(Permissions.ViewIncidents)}
+        isAuthenticated={permissions.includes(Permissions.ViewItem)}
         exact
         path="/incidents/:id"
         component={ViewItem}

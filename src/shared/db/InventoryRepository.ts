@@ -1,10 +1,11 @@
-import InventoryFilter from '../../inventory/InventoryFilter'
+import { ItemType } from '../../inventory/model/ItemType'
 import { relationalDb } from '../config/pouchdb'
 import InventoryItem from '../model/InventoryItem'
 import Repository from './Repository'
 
 interface SearchOptions {
-  type: InventoryFilter
+  text: string
+  type: ItemType
 }
 class InventoryRepository extends Repository<InventoryItem> {
   constructor() {
@@ -12,17 +13,23 @@ class InventoryRepository extends Repository<InventoryItem> {
   }
 
   async search(options: SearchOptions): Promise<InventoryItem[]> {
-    return super.search(InventoryRepository.getSearchCriteria(options))
+    const searchValue = { $regex: RegExp(options.text, 'i') }
+    const typeFilter = options.type !== 'all' ? [{ 'data.type': options.type }] : []
+    const selector = {
+      $and: [
+        {
+          'data.name': searchValue,
+        },
+        typeFilter,
+      ],
+    }
+    return super.search({
+      selector,
+    })
   }
 
-  private static getSearchCriteria(options: SearchOptions): any {
-    const typeFilter = options.type !== InventoryFilter.all ? [{ 'data.type': options.type }] : []
-    const selector = {
-      $and: typeFilter,
-    }
-    return {
-      selector,
-    }
+  async save(entity: InventoryItem): Promise<InventoryItem> {
+    return super.save(entity)
   }
 }
 
