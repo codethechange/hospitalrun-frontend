@@ -6,7 +6,7 @@ import useAddBreadcrumbs from '../page-header/breadcrumbs/useAddBreadcrumbs'
 import PrivateRoute from '../shared/components/PrivateRoute'
 import Permissions from '../shared/model/Permissions'
 import { RootState } from '../shared/store'
-import AddItem from './add/AddItem'
+import AddInventoryItem from './add/AddInventoryItem'
 import ViewInventory from './view/ViewInventory'
 import ViewItem from './view/ViewItem'
 
@@ -29,10 +29,10 @@ const Inventory = () => {
         component={ViewInventory}
       />
       <PrivateRoute
-        isAuthenticated={permissions.includes(Permissions.AddItem)}
+        isAuthenticated={permissions.includes(Permissions.ViewInventory)}
         exact
-        path="/incidents/new"
-        component={AddItem}
+        path="/inventory/new"
+        component={AddInventoryItem}
       />
       <PrivateRoute
         isAuthenticated={permissions.includes(Permissions.ViewItem)}

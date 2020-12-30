@@ -5,9 +5,9 @@ import SelectWithLabelFormGroup, {
 } from '../../shared/components/input/SelectWithLabelFormGroup'
 import TextInputWithLabelFormGroup from '../../shared/components/input/TextInputWithLabelFormGroup'
 import useTranslator from '../../shared/hooks/useTranslator'
+import InventoryFilter from '../model/InventoryFilter'
 import InventorySearchRequest from '../model/InventorySearchRequest'
 import { ItemType } from '../model/ItemType'
-import InventoryFilter from './InventoryFilter'
 
 interface Props {
   searchRequest: InventorySearchRequest

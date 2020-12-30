@@ -7,22 +7,28 @@ interface SearchOptions {
   text: string
   type: ItemType
 }
+
 class InventoryRepository extends Repository<InventoryItem> {
   constructor() {
     super('inventory', relationalDb)
   }
 
-  async search(options: SearchOptions): Promise<InventoryItem[]> {
-    const searchValue = { $regex: RegExp(options.text, 'i') }
-    const typeFilter = options.type !== 'all' ? [{ 'data.type': options.type }] : []
+  async search(container: SearchOptions): Promise<InventoryItem[]> {
+    const searchValue = { $regex: RegExp(container.text, 'i') }
+    const typeFilter = container.type !== 'all' ? [{ 'data.type': container.type }] : [undefined]
     const selector = {
       $and: [
         {
-          'data.name': searchValue,
+          $or: [
+            {
+              'data.name': searchValue,
+            },
+          ],
         },
-        typeFilter,
-      ],
+        ...typeFilter,
+      ].filter((x) => x !== undefined),
     }
+
     return super.search({
       selector,
     })

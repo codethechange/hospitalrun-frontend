@@ -20,14 +20,6 @@ function ViewInventoryTable(props: Props) {
     return <Spinner type="DotLoader" loading />
   }
 
-  if (data.length === 0) {
-    return (
-      <>
-        <div>No Items Found</div>
-      </>
-    )
-  }
-
   return (
     <>
       <Table
@@ -47,7 +39,7 @@ function ViewInventoryTable(props: Props) {
             key: 'reorderPoint',
           },
           {
-            label: t('inventory.items.distributionUnitLabel'),
+            label: t('inventory.items.distributionUnit'),
             key: 'distributionUnit',
           },
           {
