@@ -47,6 +47,11 @@ export default {
     items: {
       label: 'Inventory Items',
       new: 'Add Inventory Item',
+      delete: 'Delete Item',
+      successfullyDeleted: 'Successfully Deleted',
+      deleteConfirmationMessage: 'Are you sure you would like to delete this item?',
+      edit: 'Edit Item',
+      successfullyUpdated: 'Successfully Updated',
       view: 'View Item',
       name: 'Name',
       rank: 'Rank',

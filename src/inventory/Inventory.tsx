@@ -7,6 +7,7 @@ import PrivateRoute from '../shared/components/PrivateRoute'
 import Permissions from '../shared/model/Permissions'
 import { RootState } from '../shared/store'
 import AddInventoryItem from './add/AddInventoryItem'
+import EditItem from './edit/EditItem'
 import ViewInventory from './view/ViewInventory'
 import ViewItem from './view/ViewItem'
 
@@ -29,15 +30,23 @@ const Inventory = () => {
         component={ViewInventory}
       />
       <PrivateRoute
-        isAuthenticated={permissions.includes(Permissions.ViewInventory)}
+        isAuthenticated={permissions.includes(Permissions.AddItem)}
         exact
         path="/inventory/new"
         component={AddInventoryItem}
       />
       <PrivateRoute
+        isAuthenticated={
+          permissions.includes(Permissions.AddItem) && permissions.includes(Permissions.ViewItem)
+        }
+        exact
+        path="/inventory/edit/:id"
+        component={EditItem}
+      />
+      <PrivateRoute
         isAuthenticated={permissions.includes(Permissions.ViewItem)}
         exact
-        path="/incidents/:id"
+        path="/inventory/:id"
         component={ViewItem}
       />
     </Switch>

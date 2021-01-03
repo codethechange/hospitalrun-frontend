@@ -51,7 +51,7 @@ function ViewInventoryTable(props: Props) {
         actions={[
           {
             label: t('actions.view'),
-            action: (row) => history.push(`incidents/${row.id}`),
+            action: (row) => history.push(`inventory/${row.id}`),
           },
         ]}
       />
