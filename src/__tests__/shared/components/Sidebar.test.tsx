@@ -42,6 +42,9 @@ describe('Sidebar', () => {
     Permissions.AddVisit,
     Permissions.RequestImaging,
     Permissions.ViewImagings,
+    Permissions.AddItem,
+    Permissions.ViewItem,
+    Permissions.ViewInventory,
   ]
   const store = mockStore({
     components: { sidebarCollapsed: false },
@@ -461,27 +464,6 @@ describe('Sidebar', () => {
       expect(incidentsIndex).not.toBe(-1)
     })
 
-    it('should be the last one in the sidebar', () => {
-      const wrapper = setup('/incidents')
-
-      const listItems = wrapper.find(ListItem)
-      const reportsLabel = listItems.length - 2
-
-      expect(listItems.at(reportsLabel).text().trim()).toBe('incidents.reports.label')
-      expect(
-        listItems
-          .at(reportsLabel - 1)
-          .text()
-          .trim(),
-      ).toBe('incidents.reports.new')
-      expect(
-        listItems
-          .at(reportsLabel - 2)
-          .text()
-          .trim(),
-      ).toBe('incidents.label')
-    })
-
     it('should render the new incident report link', () => {
       const wrapper = setup('/incidents')
 
@@ -847,6 +829,143 @@ describe('Sidebar', () => {
       })
 
       expect(history.location.pathname).toEqual('/medications')
+    })
+  })
+
+  describe('inventory links', () => {
+    it('should be the last one in the sidebar', () => {
+      const wrapper = setup('/inventory')
+
+      const listItems = wrapper.find(ListItem)
+      const inventoryLabel = listItems.length - 1
+
+      expect(listItems.at(inventoryLabel).text().trim()).toBe('inventory.items.label')
+      expect(
+        listItems
+          .at(inventoryLabel - 1)
+          .text()
+          .trim(),
+      ).toBe('inventory.items.new')
+      expect(
+        listItems
+          .at(inventoryLabel - 2)
+          .text()
+          .trim(),
+      ).toBe('inventory.label')
+    })
+
+    it('should render the main inventory link', () => {
+      const wrapper = setup('/inventory')
+
+      const listItems = wrapper.find(ListItem)
+      const inventoryIndex = getIndex(listItems, 'inventory.label')
+
+      expect(inventoryIndex).not.toBe(-1)
+    })
+
+    it('should render the add inventory item link', () => {
+      const wrapper = setup('/inventory')
+
+      const listItems = wrapper.find(ListItem)
+      const inventoryIndex = getIndex(listItems, 'inventory.items.new')
+
+      expect(inventoryIndex).not.toBe(-1)
+    })
+
+    it('should not render the add inventory item link when user does not have add item privileges', () => {
+      const wrapper = setupNoPermissions('/inventory')
+
+      const listItems = wrapper.find(ListItem)
+      const labsIndex = getIndex(listItems, 'inventory.items.new')
+
+      expect(labsIndex).toBe(-1)
+    })
+
+    it('should render the inventory list link', () => {
+      const wrapper = setup('/inventory')
+
+      const listItems = wrapper.find(ListItem)
+      const inventoryIndex = getIndex(listItems, 'inventory.items.label')
+
+      expect(inventoryIndex).not.toBe(-1)
+    })
+
+    it('should not render the inventory list link when user does not have view inventory privileges', () => {
+      const wrapper = setupNoPermissions('/inventory')
+
+      const listItems = wrapper.find(ListItem)
+      const inventoryIndex = getIndex(listItems, 'inventory.items.label')
+
+      expect(inventoryIndex).toBe(-1)
+    })
+
+    it('main inventory link should be active when the current path is /inventory', () => {
+      const wrapper = setup('/inventory')
+
+      const listItems = wrapper.find(ListItem)
+      const inventoryIndex = getIndex(listItems, 'inventory.label')
+
+      expect(listItems.at(inventoryIndex).prop('active')).toBeTruthy()
+    })
+
+    it('should navigate to /inventory when the main lab link is clicked', () => {
+      const wrapper = setup('/')
+
+      const listItems = wrapper.find(ListItem)
+      const inventoryIndex = getIndex(listItems, 'inventory.label')
+
+      act(() => {
+        const onClick = listItems.at(inventoryIndex).prop('onClick') as any
+        onClick()
+      })
+
+      expect(history.location.pathname).toEqual('/inventory')
+    })
+
+    it('add inventory item link should be active when the current path is /inventory/new', () => {
+      const wrapper = setup('/inventory/new')
+
+      const listItems = wrapper.find(ListItem)
+      const inventoryIndex = getIndex(listItems, 'inventory.items.new')
+
+      expect(listItems.at(inventoryIndex).prop('active')).toBeTruthy()
+    })
+
+    it('should navigate to /inventory/new when the add inventory item link is clicked', () => {
+      const wrapper = setup('/inventory')
+
+      const listItems = wrapper.find(ListItem)
+      const inventoryIndex = getIndex(listItems, 'inventory.items.new')
+
+      act(() => {
+        const onClick = listItems.at(inventoryIndex).prop('onClick') as any
+        onClick()
+      })
+
+      expect(history.location.pathname).toEqual('/inventory/new')
+    })
+
+    it('inventory list link should be active when the current path is /inventory', () => {
+      const wrapper = setup('/inventory')
+
+      const listItems = wrapper.find(ListItem)
+      const inventoryIndex = getIndex(listItems, 'inventory.items.label')
+
+      expect(listItems.at(inventoryIndex).prop('active')).toBeTruthy()
+    })
+
+    it('should navigate to /inventory when the inventory list link is clicked', () => {
+      const wrapper = setup('/inventory/new')
+
+      const listItems = wrapper.find(ListItem)
+      const inventoryIndex = getIndex(listItems, 'inventory.items.label')
+
+      act(() => {
+        const onClick = listItems.at(inventoryIndex).prop('onClick') as any
+        onClick()
+      })
+
+      expect(history.location.pathname).toEqual('/inventory')
     })
   })
 })
