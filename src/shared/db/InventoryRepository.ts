@@ -19,11 +19,7 @@ class InventoryRepository extends Repository<InventoryItem> {
     const selector = {
       $and: [
         {
-          $or: [
-            {
-              'data.name': searchValue,
-            },
-          ],
+          'data.name': searchValue,
         },
         ...typeFilter,
       ].filter((x) => x !== undefined),

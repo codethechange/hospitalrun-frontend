@@ -66,7 +66,6 @@ export const schema = [
   {
     singular: 'inventory',
     plural: 'inventories',
-    // fix
   },
 ]
 export const relationalDb = localDb.setSchema(schema)

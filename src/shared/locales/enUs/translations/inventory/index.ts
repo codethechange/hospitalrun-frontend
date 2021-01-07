@@ -71,6 +71,7 @@ export default {
         distributionUnitRequired: 'Distribution Unit is required',
         pricePerUnitRequired: 'Price per Unit is required',
         pricePerUnitNaN: 'Price per Unit must be a number',
+        negative: 'Input must be nonnegative',
       },
     },
   },

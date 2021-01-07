@@ -117,8 +117,8 @@ const AddInventoryItem = () => {
           label={t('inventory.items.name')}
           isRequired
           isEditable
-          isInvalid={!!error?.itemName}
-          feedback={t(error?.itemName as string)}
+          isInvalid={!!error?.itemNameError}
+          feedback={t(error?.itemNameError as string)}
           value={addInventoryItem.name}
           onChange={(event) => onTextInputChange(event.currentTarget.value, 'name')}
         />
@@ -127,8 +127,8 @@ const AddInventoryItem = () => {
           label={t('inventory.items.rank')}
           isRequired
           isEditable
-          isInvalid={!!error?.rank}
-          feedback={t(error?.rank as string)}
+          isInvalid={!!error?.rankError}
+          feedback={t(error?.rankError as string)}
           value={addInventoryItem.rank}
           onChange={(event) => onTextInputChange(event.currentTarget.value, 'rank')}
         />
@@ -148,8 +148,8 @@ const AddInventoryItem = () => {
           label={t('inventory.items.crossReference')}
           isRequired
           isEditable
-          isInvalid={!!error?.crossReference}
-          feedback={t(error?.crossReference as string)}
+          isInvalid={!!error?.crossReferenceError}
+          feedback={t(error?.crossReferenceError as string)}
           value={addInventoryItem.crossReference}
           onChange={(event) => onTextInputChange(event.currentTarget.value, 'crossReference')}
         />
@@ -160,8 +160,8 @@ const AddInventoryItem = () => {
           isEditable
           value={(addInventoryItem.reorderPoint as unknown) as string}
           onChange={(event) => onTextInputChange(event.currentTarget.value, 'reorderPoint')}
-          isInvalid={!!error?.reorderPoint}
-          feedback={t(error?.reorderPoint as number)}
+          isInvalid={!!error?.reorderPointError}
+          feedback={t(error?.reorderPointError as string)}
         />
         <div className="form-group">
           <SelectWithLabelFormGroup
@@ -183,8 +183,8 @@ const AddInventoryItem = () => {
           isRequired
           value={(addInventoryItem.pricePerUnit as unknown) as string}
           onChange={(event) => onTextInputChange(event.currentTarget.value, 'pricePerUnit')}
-          isInvalid={!!error?.pricePerUnit}
-          feedback={t(error?.pricePerUnit as number)}
+          isInvalid={!!error?.pricePerUnitError}
+          feedback={t(error?.pricePerUnitError as string)}
         />
         <div className="form-group">
           <TextFieldWithLabelFormGroup

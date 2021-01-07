@@ -95,7 +95,7 @@ const pageMap: {
     path: '/inventory/new',
     icon: 'add',
   },
-  ViewInventory: {
+  viewInventory: {
     permission: Permissions.ViewInventory,
     label: 'inventory.items.label',
     path: '/inventory',

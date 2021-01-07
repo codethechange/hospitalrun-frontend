@@ -437,8 +437,7 @@ const Sidebar = () => {
       </ListItem>
       {splittedPath[1].includes('inventory') && expandedItem === 'inventory' && (
         <List layout="flush" className="nav flex-column">
-          {/* Need to figure out how to give permissions */}
-          {permissions.includes(Permissions.ViewInventory) && (
+          {permissions.includes(Permissions.AddItem) && (
             <ListItem
               className="nav-item"
               style={listSubItemStyleNew}

@@ -70,8 +70,8 @@ const ViewItemDetails = (props: Props) => {
         label={t('inventory.items.name')}
         isRequired
         isEditable={isEditable}
-        isInvalid={!!error?.itemName}
-        feedback={t(error?.itemName as string)}
+        isInvalid={!!error?.itemNameError}
+        feedback={t(error?.itemNameError as string)}
         value={item.name}
         onChange={(event) => onInputElementChange(event, 'name')}
       />
@@ -80,8 +80,8 @@ const ViewItemDetails = (props: Props) => {
         label={t('inventory.items.rank')}
         isRequired
         isEditable={isEditable}
-        isInvalid={!!error?.rank}
-        feedback={t(error?.rank as string)}
+        isInvalid={!!error?.rankError}
+        feedback={t(error?.rankError as string)}
         value={item.rank}
         onChange={(event) => onInputElementChange(event, 'rank')}
       />
@@ -101,8 +101,8 @@ const ViewItemDetails = (props: Props) => {
         label={t('inventory.items.crossReference')}
         isRequired
         isEditable={isEditable}
-        isInvalid={!!error?.crossReference}
-        feedback={t(error?.crossReference as string)}
+        isInvalid={!!error?.crossReferenceError}
+        feedback={t(error?.crossReferenceError as string)}
         value={item.crossReference}
         onChange={(event) => onInputElementChange(event, 'crossReference')}
       />
@@ -113,8 +113,8 @@ const ViewItemDetails = (props: Props) => {
         isEditable={isEditable}
         value={(item.reorderPoint as unknown) as string}
         onChange={(event) => onInputElementChange(event, 'reorderPoint')}
-        isInvalid={!!error?.reorderPoint}
-        feedback={t(error?.reorderPoint as number)}
+        isInvalid={!!error?.reorderPointError}
+        feedback={t(error?.reorderPointError as string)}
       />
       <div className="form-group">
         <SelectWithLabelFormGroup
@@ -136,8 +136,8 @@ const ViewItemDetails = (props: Props) => {
         isRequired
         value={(item.pricePerUnit as unknown) as string}
         onChange={(event) => onInputElementChange(event, 'pricePerUnit')}
-        isInvalid={!!error?.pricePerUnit}
-        feedback={t(error?.pricePerUnit as number)}
+        isInvalid={!!error?.pricePerUnitError}
+        feedback={t(error?.pricePerUnitError as string)}
       />
       <div className="form-group">
         <TextFieldWithLabelFormGroup
