@@ -3,6 +3,7 @@ import format from 'date-fns/format'
 import React from 'react'
 import { useHistory } from 'react-router'
 
+import usePatient from '../../patients/hooks/usePatient'
 import TextFieldWithLabelFormGroup from '../../shared/components/input/TextFieldWithLabelFormGroup'
 import TextInputWithLabelFormGroup from '../../shared/components/input/TextInputWithLabelFormGroup'
 import useTranslator from '../../shared/hooks/useTranslator'
@@ -21,6 +22,7 @@ function ViewIncidentDetails(props: Props) {
   const history = useHistory()
   const { t } = useTranslator()
   const { data, isLoading } = useIncident(incidentId)
+  const { data: patient } = usePatient(data?.patient)
   const [mutate] = useResolveIncident()
 
   if (data === undefined || isLoading) {
@@ -40,12 +42,7 @@ function ViewIncidentDetails(props: Props) {
 
     if (permissions.includes(Permissions.ResolveIncident)) {
       buttons.push(
-        <Button
-          className="mr-2"
-          onClick={onResolve}
-          color="primary"
-          key="incidents.reports.resolve"
-        >
+        <Button onClick={onResolve} color="primary" key="incidents.reports.resolve">
           {t('incidents.reports.resolve')}
         </Button>,
       )
@@ -132,9 +129,20 @@ function ViewIncidentDetails(props: Props) {
           />
         </Column>
       </Row>
+      {data.patient && (
+        <Row>
+          <Column md={6}>
+            <TextInputWithLabelFormGroup
+              label={t('incidents.reports.patient')}
+              name="patient"
+              value={patient?.fullName}
+            />
+          </Column>
+        </Row>
+      )}
       {data.resolvedOn === undefined && (
         <div className="row float-right">
-          <div className="btn-group btn-group-lg mt-3">{getButtons()}</div>
+          <div className="btn-group btn-group-lg mt-3 mr-3">{getButtons()}</div>
         </div>
       )}
     </>
