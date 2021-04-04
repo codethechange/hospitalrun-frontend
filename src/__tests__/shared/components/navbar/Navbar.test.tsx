@@ -61,25 +61,6 @@ describe('Navbar', () => {
     })
 
     it('should not show an item if user does not have a permission', () => {
-      // exclude labs, incidents, inventory, and imagings permissions
-      const wrapper = setup(cloneDeep(allPermissions).slice(0, 6))
-      const hospitalRunNavbar = wrapper.find(HospitalRunNavbar)
-      const hamberger = hospitalRunNavbar.find('.nav-hamberger')
-      const { children } = hamberger.first().props() as any
-
-      const labels = [
-        'labs.requests.new',
-        'labs.requests.label',
-        'incidents.reports.new',
-        'incidents.reports.label',
-        'inventory.items.new',
-        'inventory.items.label',
-        'medications.requests.new',
-        'medications.requests.label',
-        'imagings.requests.new',
-        'imagings.requests.label',
-      ]
-
       // exclude labs, incidents, and imagings permissions
       // NOTE: "View Imagings" is based on the ReadPatients permission - not an Imagings permission
       const excludedPermissions = [
@@ -138,18 +119,6 @@ describe('Navbar', () => {
           }),
         ).toBeInTheDocument()
 
-    it('should not show a shortcut if user does not have a permission', () => {
-      // exclude labs and incidents permissions
-      const wrapper = setup(cloneDeep(allPermissions).slice(0, 6))
-      const hospitalRunNavbar = wrapper.find(HospitalRunNavbar)
-      const addNew = hospitalRunNavbar.find('.nav-add-new')
-      const { children } = addNew.first().props() as any
-
-      children.forEach((option: any) => {
-        expect(option.props.children).not.toEqual('labs.requests.new')
-        expect(option.props.children).not.toEqual('incidents.requests.new')
-        expect(option.props.children).not.toEqual('imagings.requests.new')
-        expect(option.props.children).not.toEqual('inventory.items.new')
         // 0 & 1 index are dashboard fixed elements, 2 index is first menu label for user
         expect(screen.queryAllByRole('button')[2]).toHaveTextContent(/patients\.newpatient/i)
       })
