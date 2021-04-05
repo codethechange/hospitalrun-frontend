@@ -8,6 +8,7 @@ describe('AddInventoryItem', () => {
   it('add item and cancel buttons render', () => {
     const { container, getByText } = render(<AddInventoryItem/>)
     console.log(container);
+    expect(true);
   })
 
   it('cancel returns you to inventory page', () => {})
