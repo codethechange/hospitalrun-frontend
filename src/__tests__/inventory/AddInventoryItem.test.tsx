@@ -2,7 +2,7 @@ import React from 'react';
 
 import createMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import { fireEvent, getByText, prettyDOM, render, screen, waitFor, waitForElementToBeRemoved, within } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { Router, Route } from 'react-router-dom'
 
 import Inventory from '../../inventory/Inventory';
@@ -11,7 +11,6 @@ import { RootState } from '../../shared/store'
 import Permissions from '../../shared/model/Permissions'
 import { createMemoryHistory } from 'history'
 import { Provider } from 'react-redux';
-import { Table } from '@hospitalrun/components'
 
 const mockStore = createMockStore<RootState, any>([thunk])
 
