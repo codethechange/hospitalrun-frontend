@@ -16,7 +16,6 @@ import ViewItemDetails from './ViewItemDetails'
 const ViewItem = () => {
   const { t } = useTranslator()
   const updateTitle = useUpdateTitle()
-  updateTitle(t('inventory.items.view'))
   const { id } = useParams()
   const history = useHistory()
   const [deleteMutate] = useDeleteItem()
@@ -82,6 +81,10 @@ const ViewItem = () => {
       setButtonToolBar([])
     }
   }, [getButtons, setButtonToolBar])
+
+  useEffect(() => {
+    updateTitle(t('inventory.items.view'))
+  }, [t, updateTitle])
 
   return (
     <>
