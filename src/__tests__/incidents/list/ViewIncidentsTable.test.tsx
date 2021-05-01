@@ -69,7 +69,7 @@ describe('View Incidents Table', () => {
 
   it('should display a download button', async () => {
     setup({ status: IncidentFilter.all })
-    expect(p
+    expect(
       await screen.findByRole('button', { name: /incidents.reports.download/i }),
     ).toBeInTheDocument()
   })
