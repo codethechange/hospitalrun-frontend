@@ -11,6 +11,7 @@ import { RootState } from '../../shared/store'
 import Permissions from '../../shared/model/Permissions'
 import { createMemoryHistory } from 'history'
 import { Provider } from 'react-redux';
+import { expectOneConsoleError } from '../test-utils/console.utils'
 
 const mockStore = createMockStore<RootState, any>([thunk])
 
@@ -38,25 +39,14 @@ const setup = (
 
 describe('AddInventoryItem', () => {
   it('add item and cancel buttons render', () => {
-    /* 1. Render the component 
-     * 2. Check if the add item button has been rendered
-     * 3. Then, check if the cancel item button renders
-     */
-
     setup('/inventory/new', [Permissions.AddItem], '/');
-    let buttons = screen.getAllByRole('button');
-    expect(buttons[0].textContent).toEqual(' inventory.actions.add ');
-    expect(buttons[1].textContent).toEqual(' actions.cancel ');
+    expect(screen.getByRole('button', { name: "inventory.actions.add" })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: "actions.cancel" })).toBeInTheDocument();
   })
 
   it('cancel returns you to inventory page', async () => {
-    // 1. render component
-    // 2. check that the cancel button exists
-    // 3. click the cancel button
-    // 4. check that the inventory component is rerendered
     const { history } = setup('/inventory/new', [Permissions.AddItem, Permissions.ViewInventory], '/');
-    let buttons = screen.getAllByRole('button');
-    let cancelButton = buttons[1];
+    const cancelButton = screen.getByRole('button', { name: "actions.cancel" });
     expect(cancelButton.textContent).toEqual(' actions.cancel ');
     fireEvent.click(cancelButton);
     expect(history.location.pathname).toEqual('/inventory');
@@ -67,11 +57,17 @@ describe('AddInventoryItem', () => {
 
   it ('add item requires fields to be entered', async () => {
     const { history } = setup('/inventory/new', [Permissions.AddItem, Permissions.ViewInventory, Permissions.ViewItem], '/');
-    fireEvent.click(screen.getAllByRole('button')[0])
+    fireEvent.click(screen.getByRole('button', { name: "inventory.actions.add" }))
+    expectOneConsoleError({
+      itemNameError: 'inventory.items.error.nameRequired',
+      rankError: 'inventory.items.error.rankRequired',
+      crossReferenceError: 'inventory.items.error.crossReferenceRequired',
+      reorderPointError: 'inventory.items.error.reorderPointRequired',
+      pricePerUnitError: 'inventory.items.error.pricePerUnitRequired'
+    })
     await waitFor(() => {
       expect(history.location.pathname).toMatch(/\/inventory\/new*/g)
-    })    
-
+    })
   })
 
   it('add item takes you to view item', async () => { 
