@@ -2,7 +2,7 @@ import { screen, render, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
 
-import NewNoteModal from '../../../patients/notes/NewNoteModal'
+import NewNoteModal from '../../../shared/notes/NewNoteModal'
 import PatientRepository from '../../../shared/db/PatientRepository'
 import Patient from '../../../shared/model/Patient'
 import { expectOneConsoleError } from '../../test-utils/console.utils'
@@ -22,7 +22,9 @@ describe('New Note Modal', () => {
         show
         onCloseButtonClick={onCloseSpy}
         toggle={jest.fn()}
-        patientId={mockPatient.id}
+        onSave={onSaveSpy}
+        setNote={jest.fn()}
+        note={note}
       />,
     )
   }
@@ -45,6 +47,18 @@ describe('New Note Modal', () => {
     expect(cancelButton).toHaveClass('btn-danger')
     expect(successButton).toHaveClass('btn-success')
     expect(within(successButton).getByRole('img')).toHaveAttribute('data-icon', 'plus')
+  })
+
+  it("should render 'Edit Note' strings if date object is specified", () => {
+    // TODO
+    // const { wrapper } = setup(jest.fn(), jest.fn(), {
+    //   ...mockNote,
+    //   date: new Date().toISOString()
+    // })
+    // const modal = wrapper.find(Modal)
+    // expect(modal.prop('title')).toEqual('patient.notes.edit')
+    // expect(modal.prop('successButton')?.children).toEqual('patient.notes.edit')
+
   })
 
   it('should render a notes rich text editor', () => {

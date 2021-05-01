@@ -9,7 +9,6 @@ import * as breadcrumbUtil from '../../../page-header/breadcrumbs/useAddBreadcru
 import * as ButtonBarProvider from '../../../page-header/button-toolbar/ButtonBarProvider'
 import IncidentRepository from '../../../shared/db/IncidentRepository'
 import Incident from '../../../shared/model/Incident'
-import Permissions from '../../../shared/model/Permissions'
 
 describe('View Incident Details', () => {
   const expectedDate = new Date(2020, 5, 1, 19, 48)
