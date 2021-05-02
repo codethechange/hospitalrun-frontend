@@ -44,24 +44,16 @@ export default function validateItem(item: InventoryItem): InventoryItemError {
     newError.crossReferenceError = 'inventory.items.error.crossReferenceRequired'
   }
 
-  if (!item.reorderPoint) {
-    newError.reorderPointError = 'inventory.items.error.reorderPointRequired'
-  }
-
-  if (Number.isNaN(Number(item.reorderPoint))) {
-    newError.reorderPointError = 'inventory.items.error.reorderPointNaN'
+  if (!item.reorderPoint || Number.isNaN(parseFloat(item.reorderPoint))) {
+    newError.reorderPointError = 'inventory.items.error.reorderPointInvalid'
   }
 
   if (Number(item.reorderPoint) < 0) {
     newError.reorderPointError = 'inventory.items.error.negative'
   }
 
-  if (!item.pricePerUnit) {
-    newError.pricePerUnitError = 'inventory.items.error.pricePerUnitRequired'
-  }
-
-  if (Number.isNaN(Number(item.pricePerUnit))) {
-    newError.pricePerUnitError = 'inventory.items.error.pricePerUnitNaN'
+  if ((!item.pricePerUnit && item.pricePerUnit !== 0) || Number.isNaN(item.pricePerUnit)) {
+    newError.pricePerUnitError = 'inventory.items.error.pricePerUnitInvalid'
   }
 
   if (Number(item.pricePerUnit) < 0) {
